@@ -8,7 +8,15 @@ $filename = $_FILES['image']['name'];
 $ext = strtolower(array_pop(explode('.', $filename)));
 
 if (!file_exists("$upload_dir")) {
-	mkdir($upload_dir, 0777, true);
+	$old1 = umask(0);
+	mkdir($upload_dir, 0777);
+	umask($old1);
+}
+
+if (!file_exists("$output_dir")) {
+	$old2 = umask(0);
+	mkdir($output_dir, 0777);
+	umask($old2);
 }
 
 if( $error != UPLOAD_ERR_OK ) {
@@ -38,8 +46,10 @@ move_uploaded_file( $_FILES['image']['tmp_name'], "$upload_dir/$filename");
 $command = "python process_image.py '$filename'";
 shell_exec($command);
 
-echo "<h2>Process Finished!</h2>
-	<img src='$upload_dir/$filename' alt='your image' height='40%'/> <br><br><br>
-	<img src='$output_dir/$filename' alt='output image' height='40%'/>"
 
+echo "<h2>Processing Finished!</h2> <br>
+	<h3>[Original Image]</h3>
+	<img src='$upload_dir/$filename' alt='your image' height='40%'/> <br><br><br>
+	<h3>[Result Image]</h3>
+	<img src='$output_dir/$filename' alt='output image' height='40%'/>"
 ?>
