@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+  <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+  <script>
+      function readOrign(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+
+              reader.onload = function (e) {
+                  $('#orign')
+                      .attr('src', e.target.result)
+                      .height(300)
+              };
+
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+
+  </script>
+  <meta charset=utf-8 />
+  <title>JS Bin</title>
+  <style>
+    article, aside, figure, footer, header, hgroup, 
+    menu, nav, section { display: block; }
+  </style>
+</head>
+<body>
+  <form enctype="multipart/form-data" action="fileupload.php" method="post">
+    <input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>
+    <input type="file" name="image" id="file" size="80" onchange="readOrign(this);"> <br><br><br>
+    <img id="orign" src="#" alt="your image">  <br><br><br>
+    <input type="submit" id="u_button" name="u_button" value="submit" /> <br><br><br>
+  </form>
+  
+</body>
+
+
+
+</html>
